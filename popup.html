@@ -6,6 +6,20 @@
 </head>
 <body>
   <ul id="settings"></ul>
+  <form id="jev" autocomplete="off">
+    <label title="JEV API key">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></svg>
+      <input type="password" name="jevKey" placeholder="JEV API key" spellcheck="false">
+    </label>
+    <label title="Counts as productive">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>
+      <textarea name="jevYes" rows="3"></textarea>
+    </label>
+    <label title="Counts as unproductive">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      <textarea name="jevNo" rows="3"></textarea>
+    </label>
+  </form>
   <script src="settings.js"></script>
   <script src="popup.js"></script>
 </body>

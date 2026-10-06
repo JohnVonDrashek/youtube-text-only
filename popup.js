@@ -27,3 +27,15 @@ chrome.storage.sync.get(DEFAULTS, stored => {
     list.append(li);
   }
 });
+
+// JEV settings for "Undumb my feed". Saved as you type; an emptied
+// description goes back to its default.
+const form = document.getElementById('jev');
+chrome.storage.local.get(JEV_DEFAULTS, stored => {
+  for (const field of form.elements) {
+    field.value = stored[field.name];
+    field.addEventListener('input', () => {
+      chrome.storage.local.set({ [field.name]: field.value.trim() || JEV_DEFAULTS[field.name] });
+    });
+  }
+});

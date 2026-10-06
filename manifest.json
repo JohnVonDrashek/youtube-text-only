@@ -4,6 +4,10 @@
   "version": "0.1.0",
   "description": "YouTube as a plain text list: no thumbnails, no profile pictures, no Shorts.",
   "permissions": ["storage"],
+  "host_permissions": ["https://api.typesafe.ai/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -21,7 +25,7 @@
     {
       "matches": ["https://www.youtube.com/*"],
       "css": ["content.css"],
-      "js": ["settings.js", "content.js"],
+      "js": ["settings.js", "content.js", "undumb.js"],
       "run_at": "document_start"
     }
   ]

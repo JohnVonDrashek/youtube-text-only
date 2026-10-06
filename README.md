@@ -28,6 +28,27 @@ refresh the YouTube tab.
 | No suggestions | off | Suggested videos beside and under the player |
 | No comments | off | The comments section |
 
+## Undumb my feed
+
+On home, subscriptions and channel video pages, a button in the bottom-right
+corner sends the titles and channel names in the feed to
+[JEV](https://docs.typesafe.ai/), TypeSafe's yes/no decision model, with one
+question per video: is watching this a productive use of time? Videos it
+gives under a 50% chance are hidden, and videos that load as you scroll are
+judged too. Click the button again to show everything.
+
+Setup: sign in at [console.typesafe.ai](https://console.typesafe.ai), create
+an API key, and paste it into the key field in the extension's menu. The two
+boxes under it describe what counts as productive (✓) and what doesn't (✗);
+JEV reads them literally, so be specific. Editing them re-asks about every
+video.
+
+JEV costs $0.042 per million input tokens and nothing for output, so a feed of
+30 titles costs a small fraction of a cent. Answers are cached per video, so
+nothing is sent twice. The key stays in this browser's extension storage, and
+only the background worker uses it. JEV is trained mainly on English, so
+titles in other languages get less accurate answers.
+
 ## When something comes back
 
 YouTube renames page elements a few times a year. When a thumbnail or a
@@ -40,5 +61,7 @@ Files:
 - `content.js` turns the switches into attributes on `<html>`, redirects
   `/shorts/` links, keeps theater mode from being the default and tags Shorts
   entries that only text can identify.
+- `undumb.js` adds the Undumb button and hides what JEV calls unproductive.
+- `background.js` makes the JEV requests, so the key never reaches the page.
 - `settings.js` lists the switches and their defaults.
 - `popup.*` is the toolbar menu.

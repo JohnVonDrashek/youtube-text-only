@@ -1,4 +1,4 @@
-// Shared by the content script and the popup.
+// Shared by the content scripts, the popup and the background worker.
 // Each setting turns on an attribute on <html>, and content.css keys off it.
 const SETTINGS = [
   { key: 'text', attr: 'ytt-text', on: true, label: 'Text only' },
@@ -12,3 +12,12 @@ const SETTINGS = [
 ];
 
 const DEFAULTS = Object.fromEntries(SETTINGS.map(s => [s.key, s.on]));
+
+// "Undumb my feed" asks JEV a yes/no question per video. Its answers depend on
+// these two descriptions, so they're editable in the popup. Kept in
+// chrome.storage.local with the API key, which never leaves this device.
+const JEV_DEFAULTS = {
+  jevKey: '',
+  jevYes: 'Teaches something real, builds a skill, explains news, history or ideas, or feeds the mind or soul.',
+  jevNo: 'Mainly for passing time: drama, pranks, reactions, gossip, clickbait, or mindless entertainment.',
+};
