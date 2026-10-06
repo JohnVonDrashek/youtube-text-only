@@ -93,8 +93,30 @@ html[ytt-list] ytd-rich-grid-renderer > #contents > ytd-continuation-item-render
   margin-right: 8px !important;
 }
 
+/* Shelves inside the feed (the "most relevant" row on Subscriptions, news
+   and so on) line up with the list and stack their videos too. */
+html[ytt-list] ytd-rich-grid-renderer > #contents > ytd-rich-section-renderer {
+  max-width: 836px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+html[ytt-list] ytd-rich-shelf-renderer #rich-shelf-header {
+  margin-left: 0 !important;
+}
+html[ytt-list] ytd-rich-shelf-renderer #contents-container > #contents {
+  display: block !important;
+  margin: 0 !important;
+}
+html[ytt-list] ytd-rich-shelf-renderer #contents-container > #contents > ytd-rich-item-renderer {
+  display: block !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
 /* Tighter rows with a divider once the pictures are gone. */
-html[ytt-list][ytt-text] ytd-rich-grid-renderer > #contents > ytd-rich-item-renderer {
+html[ytt-list][ytt-text] ytd-rich-grid-renderer > #contents > ytd-rich-item-renderer,
+html[ytt-list][ytt-text] ytd-rich-shelf-renderer #contents-container > #contents > ytd-rich-item-renderer {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   padding: 12px 0;
@@ -114,47 +136,65 @@ html[ytt-list][ytt-text] ytd-watch-next-secondary-results-renderer yt-lockup-vie
 }
 
 /* ---------- Loading placeholders ---------- */
-/* The grey shapes YouTube draws before a page fills in, reshaped to match. */
+/* The grey shapes YouTube draws while a page loads, reshaped to match. There
+   are two kinds: a static copy written into the page (#home-page-skeleton,
+   .watch-skeleton) and the app's own ghost cards, which signed-in pages use
+   on first load and while scrolling (ytd-ghost-grid-renderer). */
 
 html[ytt-text] #home-page-skeleton .rich-thumbnail,
 html[ytt-text] #home-page-skeleton .channel-avatar,
-html[ytt-text] #watch-page-skeleton #channel-icon,
+html[ytt-text] ytd-ghost-grid-renderer .rich-thumbnail,
+html[ytt-text] ytd-ghost-grid-renderer .channel-avatar,
+html[ytt-text] .watch-skeleton #channel-icon,
+html[ytt-text] .watch-skeleton .video-skeleton .thumbnail,
 html[ytt-text] .ytGhostCommentsAvatar {
   display: none !important;
 }
 
-/* First-load placeholder on home and subscriptions: one column. */
-html[ytt-list] #home-container-media {
+/* One column. */
+html[ytt-list] #home-container-media,
+html[ytt-list] ytd-ghost-grid-renderer .ghost-grid {
   display: block !important;
+}
+html[ytt-list] #home-container-media {
   margin: 18px 0 0 !important;
   padding: 0 24px !important;
 }
-html[ytt-list] #home-page-skeleton .rich-grid-media-skeleton {
+html[ytt-list] #home-page-skeleton .rich-grid-media-skeleton,
+html[ytt-list] ytd-ghost-grid-renderer .ghost-card {
+  width: auto !important;
   min-width: 0 !important;
   max-width: 820px !important;
   margin: 0 !important;
 }
 
-/* ...and two short bars per row, sized like a title and its byline. */
-html[ytt-list][ytt-text] #home-page-skeleton .video-details {
+/* Each row is two short bars, sized like a title and its byline. */
+html[ytt-list][ytt-text] #home-page-skeleton .video-details,
+html[ytt-list][ytt-text] ytd-ghost-grid-renderer .ghost-card {
   padding: 12px 0 !important;
   border-bottom: 1px solid var(--yt-spec-10-percent-layer, rgba(128, 128, 128, 0.25));
 }
-html[ytt-text] #home-page-skeleton .rich-video-title {
-  width: 56%;
-  height: 16px;
-  margin: 3px 0 10px;
+html[ytt-text] #home-page-skeleton .rich-video-title,
+html[ytt-text] ytd-ghost-grid-renderer .rich-video-title {
+  width: 56% !important;
+  height: 16px !important;
+  margin: 3px 0 10px !important;
+  padding: 0 !important;
 }
-html[ytt-text] #home-page-skeleton .rich-grid-media-skeleton:nth-child(3n + 2) .rich-video-title {
-  width: 44%;
+html[ytt-text] #home-page-skeleton .rich-grid-media-skeleton:nth-child(3n + 2) .rich-video-title,
+html[ytt-text] ytd-ghost-grid-renderer .ghost-card:nth-child(3n + 2) .rich-video-title {
+  width: 44% !important;
 }
-html[ytt-text] #home-page-skeleton .rich-grid-media-skeleton:nth-child(3n) .rich-video-title {
-  width: 68%;
+html[ytt-text] #home-page-skeleton .rich-grid-media-skeleton:nth-child(3n) .rich-video-title,
+html[ytt-text] ytd-ghost-grid-renderer .ghost-card:nth-child(3n) .rich-video-title {
+  width: 68% !important;
 }
-html[ytt-text] #home-page-skeleton .rich-video-meta {
-  width: 26%;
-  height: 12px;
-  margin: 0 0 3px;
+html[ytt-text] #home-page-skeleton .rich-video-meta,
+html[ytt-text] ytd-ghost-grid-renderer .rich-video-meta {
+  width: 26% !important;
+  height: 12px !important;
+  margin: 0 0 3px !important;
+  padding: 0 !important;
 }
 
 /* ---------- No Shorts ---------- */
