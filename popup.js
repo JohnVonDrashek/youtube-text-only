@@ -2,6 +2,7 @@
 const ICONS = {
   text: '<path d="M4 6h16M4 10h16M4 14h10M4 18h12"/>',
   list: '<rect x="4" y="4" width="16" height="4" rx="1"/><rect x="4" y="10" width="16" height="4" rx="1"/><rect x="4" y="16" width="16" height="4" rx="1"/>',
+  player: '<rect x="3" y="5" width="18" height="14" rx="2"/><rect x="6" y="8" width="7" height="5" rx="1"/>',
   shorts: '<rect x="7" y="3" width="10" height="18" rx="2"/><path d="M4 4l16 16"/>',
   promos: '<path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M17 9l4 6M21 9l-4 6"/>',
   home: '<path d="M4 11l8-7 8 7v9H4z"/><path d="M4 4l16 16"/>',

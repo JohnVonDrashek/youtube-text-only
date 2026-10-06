@@ -21,6 +21,7 @@ refresh the YouTube tab.
 | --- | --- | --- |
 | Text only | on | Thumbnails, profile pictures, channel banners, hover previews, end-of-video walls and cards, the channel watermark |
 | One per row | on | The multi-column grid on home, subscriptions and channel pages |
+| Small player | on | The full-size video: it starts 360px wide, and theater mode (the button behind ‹ on the small player, or the T key) shows it big. Every video opens out of theater mode |
 | No Shorts | on | Shorts shelves, the sidebar entry, search filter and channel tab; Shorts links open in the normal player |
 | No ads or games | on | Feed ads, sponsored search results, the Playables shelf, merch shelves |
 | No home feed | off | Everything on the home page below the filter chips |
@@ -37,6 +38,7 @@ Files:
 
 - `content.css` holds every hiding rule, grouped by switch.
 - `content.js` turns the switches into attributes on `<html>`, redirects
-  `/shorts/` links and tags Shorts entries that only text can identify.
+  `/shorts/` links, keeps theater mode from being the default and tags Shorts
+  entries that only text can identify.
 - `settings.js` lists the switches and their defaults.
 - `popup.*` is the toolbar menu.

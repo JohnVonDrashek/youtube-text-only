@@ -135,6 +135,31 @@ html[ytt-list][ytt-text] ytd-watch-next-secondary-results-renderer yt-lockup-vie
   border-bottom: 1px solid var(--yt-spec-10-percent-layer, rgba(128, 128, 128, 0.25));
 }
 
+/* ---------- Small player ---------- */
+/* The video starts thumbnail-sized. Theater mode and full screen are the
+   ways to see it big; content.js makes sure neither is the default. */
+
+html[ytt-small-player] ytd-watch-flexy:not([theater]):not([fullscreen]) #player-container-outer {
+  max-width: 360px !important;
+  min-width: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Before the page is built, YouTube shows a stand-in player with the video's
+   thumbnail as its background. It gets the same size, theater or not, since
+   theater mode at page load is never one you picked. */
+html[ytt-small-player] #player.skeleton {
+  height: auto !important;
+  min-height: 0 !important;
+}
+html[ytt-small-player] #player.skeleton #player-wrap,
+html[ytt-small-player] #player.skeleton #player-api,
+html[ytt-small-player] #player.skeleton #player-placeholder {
+  width: 360px !important;
+  height: 203px !important;
+  margin: 0 !important;
+}
+
 /* ---------- Loading placeholders ---------- */
 /* The grey shapes YouTube draws while a page loads, reshaped to match. There
    are two kinds: a static copy written into the page (#home-page-skeleton,
