@@ -17,8 +17,8 @@ html[ytt-text] ytd-backstage-image-renderer,
 html[ytt-text] ytd-post-multi-image-renderer,
 html[ytt-text] ytd-hero-playlist-thumbnail-renderer,
 /* Inside the player: the wall of videos at the end, the creator's end cards,
-   the fullscreen "more videos" grid, the up-next picture and the channel
-   watermark in the corner. */
+   the fullscreen "more videos" grid, the up-next picture, the channel
+   watermark and product photos. */
 html[ytt-text] .html5-endscreen,
 html[ytt-text] .ytp-ce-element,
 html[ytt-text] .ytp-ce-shadow,
@@ -26,7 +26,8 @@ html[ytt-text] .ytp-fullscreen-grid,
 html[ytt-text] .ytp-pause-overlay,
 html[ytt-text] .ytp-autonav-endscreen-upnext-thumbnail,
 html[ytt-text] .branding-img-container,
-html[ytt-text] .iv-branding {
+html[ytt-text] .iv-branding,
+html[ytt-text] .ytp-suggested-action-product-thumbnail {
   display: none !important;
 }
 
@@ -82,8 +83,10 @@ html[ytt-list] ytd-rich-grid-renderer > #contents {
 }
 
 /* YouTube still gives the "first column" items a different margin, which
-   makes every few rows jump sideways. */
-html[ytt-list] ytd-rich-grid-renderer > #contents > ytd-rich-item-renderer {
+   makes every few rows jump sideways. The loading spinner at the bottom gets
+   the same width so it sits under the list. */
+html[ytt-list] ytd-rich-grid-renderer > #contents > ytd-rich-item-renderer,
+html[ytt-list] ytd-rich-grid-renderer > #contents > ytd-continuation-item-renderer {
   width: 100% !important;
   max-width: 820px !important;
   margin-left: 8px !important;
@@ -108,6 +111,50 @@ html[ytt-list] ytd-watch-next-secondary-results-renderer yt-lockup-view-model {
 html[ytt-list][ytt-text] ytd-watch-next-secondary-results-renderer yt-lockup-view-model {
   padding: 8px 0;
   border-bottom: 1px solid var(--yt-spec-10-percent-layer, rgba(128, 128, 128, 0.25));
+}
+
+/* ---------- Loading placeholders ---------- */
+/* The grey shapes YouTube draws before a page fills in, reshaped to match. */
+
+html[ytt-text] #home-page-skeleton .rich-thumbnail,
+html[ytt-text] #home-page-skeleton .channel-avatar,
+html[ytt-text] #watch-page-skeleton #channel-icon,
+html[ytt-text] .ytGhostCommentsAvatar {
+  display: none !important;
+}
+
+/* First-load placeholder on home and subscriptions: one column. */
+html[ytt-list] #home-container-media {
+  display: block !important;
+  margin: 18px 0 0 !important;
+  padding: 0 24px !important;
+}
+html[ytt-list] #home-page-skeleton .rich-grid-media-skeleton {
+  min-width: 0 !important;
+  max-width: 820px !important;
+  margin: 0 !important;
+}
+
+/* ...and two short bars per row, sized like a title and its byline. */
+html[ytt-list][ytt-text] #home-page-skeleton .video-details {
+  padding: 12px 0 !important;
+  border-bottom: 1px solid var(--yt-spec-10-percent-layer, rgba(128, 128, 128, 0.25));
+}
+html[ytt-text] #home-page-skeleton .rich-video-title {
+  width: 56%;
+  height: 16px;
+  margin: 3px 0 10px;
+}
+html[ytt-text] #home-page-skeleton .rich-grid-media-skeleton:nth-child(3n + 2) .rich-video-title {
+  width: 44%;
+}
+html[ytt-text] #home-page-skeleton .rich-grid-media-skeleton:nth-child(3n) .rich-video-title {
+  width: 68%;
+}
+html[ytt-text] #home-page-skeleton .rich-video-meta {
+  width: 26%;
+  height: 12px;
+  margin: 0 0 3px;
 }
 
 /* ---------- No Shorts ---------- */
@@ -145,7 +192,8 @@ html[ytt-promos] ytd-statement-banner-renderer,
 html[ytt-promos] ytd-brand-video-singleton-renderer,
 html[ytt-promos] ytd-merch-shelf-renderer,
 html[ytt-promos] #masthead-ad,
-html[ytt-promos] #player-ads {
+html[ytt-promos] #player-ads,
+html[ytt-promos] .ytp-suggested-action {
   display: none !important;
 }
 
