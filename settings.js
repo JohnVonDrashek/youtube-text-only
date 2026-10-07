@@ -13,11 +13,6 @@ const SETTINGS = [
 
 const DEFAULTS = Object.fromEntries(SETTINGS.map(s => [s.key, s.on]));
 
-// "Undumb my feed" asks JEV a yes/no question per video. Its answers depend on
-// these two descriptions, so they're editable in the popup. Kept in
-// chrome.storage.local with the API key, which never leaves this device.
-const JEV_DEFAULTS = {
-  jevKey: '',
-  jevYes: 'Teaches something real, builds a skill, explains news, history or ideas, or feeds the mind or soul.',
-  jevNo: 'Mainly for passing time: drama, pranks, reactions, gossip, clickbait, or mindless entertainment.',
-};
+// The JEV API key for genre sorting. Kept in chrome.storage.local, so it
+// never syncs off this device.
+const JEV_DEFAULTS = { jevKey: '' };

@@ -25,7 +25,7 @@
     {
       "matches": ["https://www.youtube.com/*"],
       "css": ["content.css"],
-      "js": ["settings.js", "content.js", "undumb.js"],
+      "js": ["settings.js", "genres.js", "vendor/lucide/lucide.min.js", "content.js", "classify.js"],
       "run_at": "document_start"
     }
   ]

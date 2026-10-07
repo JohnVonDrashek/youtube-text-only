@@ -1,47 +1,49 @@
-// Asks JEV, TypeSafe's yes/no decision model, whether each video is
-// productive. This runs in the extension's background worker rather than on
-// youtube.com, so the API key never touches the page and the request isn't
-// blocked by the page's cross-origin rules.
+// Asks JEV, TypeSafe's decision model, which genre each video belongs to.
+// This runs in the extension's background worker rather than on youtube.com,
+// so the API key never touches the page and the request isn't blocked by the
+// page's cross-origin rules.
 // API reference: https://docs.typesafe.ai/api
 
-importScripts('settings.js');
+importScripts('settings.js', 'genres.js');
 
 const ENDPOINT = 'https://api.typesafe.ai/v1/systemone';
-const BATCH = 50;
+const BATCH = 40;
 
 chrome.runtime.onMessage.addListener((msg, sender, reply) => {
-  if (msg.type !== 'jev-judge') return;
-  judge(msg.videos).then(reply, err => reply({ error: err.message, detail: err.detail }));
+  if (msg.type !== 'jev-genres') return;
+  classify(msg.videos).then(reply, err => reply({ error: err.message, detail: err.detail }));
   return true; // reply comes later
 });
 
-// videos: [{ id, title, channel }] -> { verdicts: { id: probability it's productive } }
-async function judge(videos) {
-  const { jevKey, jevYes, jevNo } = await chrome.storage.local.get(JEV_DEFAULTS);
+// videos: [{ id, title, channel }] -> { genres: { id: { genre, confidence } } }
+async function classify(videos) {
+  const { jevKey } = await chrome.storage.local.get(JEV_DEFAULTS);
   if (!jevKey.trim()) throw new Error('no-key');
-  const verdicts = {};
+  const genres = {};
   for (let i = 0; i < videos.length; i += BATCH) {
     const batch = videos.slice(i, i + BATCH);
-    const answers = await ask(batch, jevKey.trim(), jevYes, jevNo);
+    const answers = await ask(batch, jevKey.trim());
     batch.forEach((v, j) => {
-      const p = answers[`v${j}`]?.noul;
-      if (typeof p === 'number') verdicts[v.id] = p;
+      const a = answers[`v${j}`];
+      if (a?.choice) genres[v.id] = { genre: a.choice, confidence: a.confidence ?? 1 };
     });
   }
-  return { verdicts };
+  return { genres };
 }
 
 // One request per batch: the videos are the state, and each gets its own
-// yes/no question pointing at it by index, the pattern TypeSafe recommends for
-// judging items in a list. All questions are answered in parallel.
-async function ask(batch, key, yes, no) {
+// Choice question pointing at it by index, the pattern TypeSafe recommends
+// for judging items in a list. All questions are answered in parallel.
+const CRITERIA = Object.fromEntries(GENRES.map(g => [g.id, g.about]));
+
+async function ask(batch, key) {
   const body = JSON.stringify({
     model: 'jev-latest',
     state: { videos: batch.map(({ title, channel }) => (channel ? { title, channel } : { title })) },
     questions: Object.fromEntries(batch.map((_, j) => [`v${j}`, {
-      type: 'noul',
-      instructions: `Is watching \`videos[${j}]\` a productive use of time?`,
-      criteria: { true: yes, false: no },
+      type: 'choice',
+      instructions: `Which genre does \`videos[${j}]\` belong to?`,
+      criteria: CRITERIA,
     }])),
   });
   for (let attempt = 0; ; attempt++) {

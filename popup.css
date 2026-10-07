@@ -108,7 +108,6 @@ form {
 }
 
 form label {
-  align-items: flex-start;
   cursor: default;
 }
 
@@ -116,12 +115,7 @@ form label:hover {
   background: none;
 }
 
-form svg {
-  margin-top: 6px;
-}
-
-form input,
-form textarea {
+form input {
   appearance: none;
   flex: 1;
   width: auto;
@@ -134,7 +128,6 @@ form textarea {
   background: var(--bg);
   color: var(--fg);
   font: 13px/1.35 system-ui, -apple-system, sans-serif;
-  resize: vertical;
   cursor: text;
 }
 
@@ -142,8 +135,7 @@ form input::after {
   content: none;
 }
 
-form input:focus,
-form textarea:focus {
+form input:focus {
   outline: none;
   border-color: var(--muted);
 }
