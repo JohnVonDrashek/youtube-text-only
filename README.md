@@ -35,9 +35,9 @@ bottom-right corner sends the titles and channel names on screen to
 [JEV](https://docs.typesafe.ai/), TypeSafe's decision model, with one Choice
 question per video: which of the genres in `genres.js` does it belong to?
 Each video then gets that genre's [Lucide](https://lucide.dev) icon where the
-channel picture was, on a disc colored by family: gold for faith and heritage,
-blue for knowledge, pink for arts and fun, green for everyday life, gray for
-other. Hover for the name; a ring instead of a disc means JEV was unsure.
+channel picture was, on a disc in that genre's own color (gold for Faith, red
+for Film & TV, cyan for Tech and so on). Hover for the name; a ring instead of
+a disc means JEV was unsure.
 Click a video's genre icon to show only that genre, and click it again, or
 the corner button, to show everything.
 
@@ -48,10 +48,10 @@ everything on screen is sorted, clicking the button takes the icons away.
 Setup: sign in at [console.typesafe.ai](https://console.typesafe.ai), create
 an API key, and paste it into the key field in the extension's menu.
 
-To change the genres, edit `genres.js`: each has an id, a label, a Lucide icon
-name (PascalCase, as in `lucide.icons`) and an `about` line that JEV reads
-when choosing. JEV reads literally, so say plainly what belongs in each.
-Changing the list starts the cache over. JEV allows up to 255 options.
+To change the genres, edit `genres.js`: each has an id, a disc color, a label,
+a Lucide icon name (PascalCase, as in `lucide.icons`) and an `about` line that
+JEV reads when choosing. JEV reads literally, so say plainly what belongs in
+each. Changing the list starts the cache over. JEV allows up to 255 options.
 
 JEV costs $0.042 per million input tokens and nothing for output; sorting a
 page of 30 videos into 20 genres is roughly 12,000 tokens, about a twentieth

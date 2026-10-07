@@ -284,13 +284,10 @@ ytd-rich-item-renderer[ytt-off-genre] {
   display: none !important;
 }
 
-/* Each genre icon sits on a disc in its family's color, with the icon in
-   whichever of white or near-black reads better on it (4.3:1 or more). Hues
-   are the dataviz reference palette, light and dark steps, checked against
-   YouTube's own page colors. */
+/* Each genre icon sits on a disc in that genre's color (set by classify.js
+   from genres.js), with a hairline edge so pale discs hold their shape on a
+   white page. */
 .ytt-genre {
-  --chip: #898781;
-  --ink: #0f0f0f;
   flex: none;
   display: inline-flex;
   align-items: center;
@@ -303,20 +300,19 @@ ytd-rich-item-renderer[ytt-off-genre] {
   border-radius: 50%;
   background: var(--chip);
   color: var(--ink);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
   cursor: pointer;
 }
-.ytt-genre[data-family="gold"] { --chip: #eda100; --ink: #0f0f0f; }
-.ytt-genre[data-family="blue"] { --chip: #2a78d6; --ink: #fff; }
-.ytt-genre[data-family="pink"] { --chip: #e87ba4; --ink: #0f0f0f; }
-.ytt-genre[data-family="green"] { --chip: #008300; --ink: #fff; }
-html[dark] .ytt-genre[data-family="gold"] { --chip: #c98500; --ink: #0f0f0f; }
-html[dark] .ytt-genre[data-family="blue"] { --chip: #3987e5; --ink: #0f0f0f; }
-html[dark] .ytt-genre[data-family="pink"] { --chip: #d55181; --ink: #0f0f0f; }
-.ytt-genre:hover {
+html[dark] .ytt-genre {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+/* The hover and unsure rules below start with "html" so they outrank the
+   dark-mode edge above. */
+html .ytt-genre:hover {
   box-shadow: 0 0 0 2px var(--yt-spec-base-background, #fff), 0 0 0 4px var(--chip);
 }
-/* JEV wasn't sure: a ring in the family color instead of a filled disc. */
-.ytt-genre[unsure] {
+/* JEV wasn't sure: a ring in the genre's color instead of a filled disc. */
+html .ytt-genre[unsure] {
   background: none;
   box-shadow: inset 0 0 0 1.5px var(--chip);
   color: var(--yt-spec-text-secondary, #606060);

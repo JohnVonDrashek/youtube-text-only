@@ -13,6 +13,16 @@ const covered = new Set(); // ids your clicks have sorted on this page
 let only = '';             // the genre the feed is narrowed to, or ''
 let status = '';           // '', 'busy' or an error code
 
+// White or near-black, whichever has more contrast on the given color.
+function inkFor(hex) {
+  const lin = i => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  };
+  const y = 0.2126 * lin(1) + 0.7152 * lin(3) + 0.0722 * lin(5);
+  return 1.05 / (y + 0.05) >= (y + 0.05) / 0.0549 ? '#fff' : '#0f0f0f';
+}
+
 function icon(name) {
   const svg = lucide.createElement(lucide.icons[name]);
   svg.setAttribute('aria-hidden', 'true');
@@ -114,7 +124,8 @@ function placeTag(item, g) {
   }
   tag.dataset.key = key;
   tag.dataset.genre = def.id;
-  tag.dataset.family = def.family;
+  tag.style.setProperty('--chip', def.color);
+  tag.style.setProperty('--ink', inkFor(def.color));
   tag.toggleAttribute('unsure', unsure);
   tag.title = def.label + (unsure ? '?' : '');
   tag.setAttribute('aria-label', `${tag.title} (show only this genre)`);
