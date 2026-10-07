@@ -35,7 +35,9 @@ bottom-right corner sends the titles and channel names on screen to
 [JEV](https://docs.typesafe.ai/), TypeSafe's decision model, with one Choice
 question per video: which of the genres in `genres.js` does it belong to?
 Each video then gets that genre's [Lucide](https://lucide.dev) icon where the
-channel picture was (hover for the name; a faded icon means JEV was unsure).
+channel picture was, on a disc colored by family: gold for faith and heritage,
+blue for knowledge, pink for arts and fun, green for everyday life, gray for
+other. Hover for the name; a ring instead of a disc means JEV was unsure.
 Click a video's genre icon to show only that genre, and click it again, or
 the corner button, to show everything.
 

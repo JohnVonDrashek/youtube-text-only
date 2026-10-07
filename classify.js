@@ -5,7 +5,7 @@
 // videos that load as you scroll wait for another click. Answers are cached
 // by video, so a click only sends the ones JEV hasn't sorted yet.
 
-const UNSURE = 0.5; // below this confidence the genre icon is drawn faded
+const UNSURE = 0.5; // below this confidence the genre icon is drawn as a ring
 
 const GENRE = Object.fromEntries(GENRES.map(g => [g.id, g]));
 const genreOf = new Map(); // video id -> { genre, confidence }
@@ -114,6 +114,7 @@ function placeTag(item, g) {
   }
   tag.dataset.key = key;
   tag.dataset.genre = def.id;
+  tag.dataset.family = def.family;
   tag.toggleAttribute('unsure', unsure);
   tag.title = def.label + (unsure ? '?' : '');
   tag.setAttribute('aria-label', `${tag.title} (show only this genre)`);
