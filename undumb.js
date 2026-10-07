@@ -54,7 +54,7 @@ function render() {
   const label =
     status === 'no-key' ? 'Add your JEV key in the extension menu' :
     status === 'bad-key' ? 'JEV rejected the key' :
-    status && status !== 'busy' ? 'JEV failed, click to retry' :
+    status && status !== 'busy' ? `JEV error ${status.replace('http-', '')}, click to retry` :
     !undumbed ? 'Undumb my feed' :
     status === 'busy' ? 'Undumbing…' :
     `Undumbed · ${hidden} hidden`;
@@ -87,7 +87,9 @@ async function judgeNew() {
   todo.forEach(v => asking.delete(v.id));
   if (reply?.error) {
     status = reply.error;
+    button.title = reply.detail || reply.error;
   } else {
+    button.removeAttribute('title');
     status = asking.size ? 'busy' : '';
     for (const [id, p] of Object.entries(reply.verdicts)) {
       verdicts.set(id, p);
@@ -146,5 +148,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (changes.undumbed || changes.jevKey) soon();
 });
 
-// The button lives on <html> so YouTube's own re-renders can't remove it.
-root.append(button);
+// The button goes straight into <body>, outside YouTube's app, so the app's
+// re-renders can't remove it.
+if (document.body) document.body.append(button);
+else document.addEventListener('DOMContentLoaded', () => document.body.append(button));

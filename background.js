@@ -11,7 +11,7 @@ const BATCH = 50;
 
 chrome.runtime.onMessage.addListener((msg, sender, reply) => {
   if (msg.type !== 'jev-judge') return;
-  judge(msg.videos).then(reply, err => reply({ error: err.message }));
+  judge(msg.videos).then(reply, err => reply({ error: err.message, detail: err.detail }));
   return true; // reply comes later
 });
 
@@ -51,13 +51,21 @@ async function ask(batch, key, yes, no) {
       body,
     });
     if (res.ok) return (await res.json()).answers;
-    if (res.status === 401 || res.status === 403) throw new Error('bad-key');
     // Rate limited (429) or overloaded (529 and other 5xx): back off and retry.
     if ((res.status === 429 || res.status >= 500) && attempt < 2) {
       const wait = Number(res.headers.get('retry-after')) || attempt + 1;
       await new Promise(r => setTimeout(r, wait * 1000));
       continue;
     }
-    throw new Error(`http-${res.status}`);
+    // Pass TypeSafe's own explanation along so the button can show it.
+    const err = new Error(res.status === 401 ? 'bad-key' : `http-${res.status}`);
+    const text = await res.text();
+    try {
+      const d = JSON.parse(text).detail;
+      err.detail = `${res.status}: ${typeof d === 'string' ? d : d?.message || text}`;
+    } catch {
+      err.detail = `${res.status}: ${text.slice(0, 300)}`;
+    }
+    throw err;
   }
 }
