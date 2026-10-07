@@ -34,20 +34,24 @@ On home, subscriptions and channel video pages, a button in the bottom-right
 corner sends the titles and channel names in the feed to
 [JEV](https://docs.typesafe.ai/), TypeSafe's yes/no decision model, with one
 question per video: is watching this a productive use of time? Videos it
-gives under a 50% chance are hidden, and videos that load as you scroll are
-judged too. Click the button again to show everything.
+gives under a 50% chance are hidden.
+
+Nothing is sent until you click. Every page starts unfiltered, and videos that
+load as you scroll wait for another click (the button changes to "Undumb 12
+more"). Once everything on screen is filtered, clicking shows it all again.
 
 Setup: sign in at [console.typesafe.ai](https://console.typesafe.ai), create
 an API key, and paste it into the key field in the extension's menu. The two
 boxes under it describe what counts as productive (✓) and what doesn't (✗);
-JEV reads them literally, so be specific. Editing them re-asks about every
-video.
+JEV reads them literally, so be specific. After editing them, the next click
+re-asks about every video.
 
 JEV costs $0.042 per million input tokens and nothing for output, so a feed of
-30 titles costs a small fraction of a cent. Answers are cached per video, so
-nothing is sent twice. The key stays in this browser's extension storage, and
-only the background worker uses it. JEV is trained mainly on English, so
-titles in other languages get less accurate answers.
+30 titles costs a small fraction of a cent. Answers are cached per video, so a
+click only sends videos JEV hasn't judged yet. The key stays in this
+browser's extension storage, and only the background worker uses it. JEV is
+trained mainly on English, so titles in other languages get less accurate
+answers.
 
 ## When something comes back
 

@@ -278,9 +278,9 @@ html[ytt-comments] ytd-comments#comments {
 
 /* ---------- Undumb my feed ---------- */
 /* The button undumb.js adds to feed pages, and the videos JEV judged
-   unproductive. */
+   unproductive after a click. */
 
-html[ytt-undumbed] ytd-rich-item-renderer[ytt-dumb] {
+ytd-rich-item-renderer[ytt-dumb] {
   display: none !important;
 }
 
