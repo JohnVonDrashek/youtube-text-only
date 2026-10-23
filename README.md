@@ -8,14 +8,13 @@ per row.
 ## Install
 
 1. Install [Violentmonkey](https://violentmonkey.github.io/).
-2. Open Violentmonkey's dashboard, click **+**, then **New**.
-3. Replace the template with everything in `text-only-youtube.user.js` and
-   save.
+2. Open
+   [text-only-youtube.user.js](https://raw.githubusercontent.com/JohnVonDrashek/youtube-text-only/main/text-only-youtube.user.js)
+   and click **Install** on the page Violentmonkey shows.
 
-To share it, put the file somewhere with a URL ending in `.user.js`, like a
-GitHub repo or a gist. Anyone with Violentmonkey who opens that link gets its
-install page. Add a `@downloadURL` line with that link and raise `@version`
-when you change the script, and installed copies update themselves.
+Share that same link to give someone else the script. Violentmonkey checks it
+for updates, so raise `@version` whenever you push a change and installed
+copies pick it up.
 
 To keep editing the file in this folder, turn on **Allow access to file URLs**
 for Violentmonkey in `chrome://extensions`, drag the file into a Chrome tab
